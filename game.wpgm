@@ -8,11 +8,26 @@ program farmville {
 	game.height(10)
 	game.width(10)
 	game.ground("ground.png")
-
+	
 	//  VISUALES
  	game.addVisualCharacter(personaje)
  	game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	
+	// CONFIGURACIÓN TECLAS
+	config.configuracionTeclasSembrado()
+
  	//  COMIENZA
 	game.start()
+}
+
+
+object config {
+	method configuracionTeclasSembrado(){
+		const posicionSiembra = personaje.position()
+		keyboard.m().onPressDo{personaje.siembraDe(new Maiz(position=posicionSiembra))}
+		keyboard.t().onPressDo{personaje.siembraDe(new Trigo(position=posicionSiembra))}
+		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=posicionSiembra))}
+	}
+
+	
 }
