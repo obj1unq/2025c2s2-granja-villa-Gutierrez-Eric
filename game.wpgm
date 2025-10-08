@@ -4,19 +4,16 @@ import cultivos.*
 
 program farmville {
 	//  CONFIG	
-	game.title("La granja")
-	game.height(10)
-	game.width(10)
-	game.ground("ground.png")
+	config.configuracionInicial()
 	
 	//  VISUALES
- 	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
+ 	config.configuracionVisuales() 
  	
 	// CONFIGURACIÓN TECLAS
-	config.configuracionTeclasSembrado()
+	config.configuracionTeclasSembrado() 
+	config.configuracionTeclasRegado()
 
- 	//  COMIENZA
+ 	// COMIENZA
 	game.start()
 }
 
@@ -27,6 +24,23 @@ object config {
 		keyboard.m().onPressDo{personaje.siembraDe(new Maiz(position=posicionSiembra))}
 		keyboard.t().onPressDo{personaje.siembraDe(new Trigo(position=posicionSiembra))}
 		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=posicionSiembra))}
+	}
+
+	method configuracionTeclasRegado(){
+		const posicionSiembra = personaje.position()
+		keyboard.r().onPressDo{personaje.regarCultivo(new Maiz(position=posicionSiembra))}
+	}
+
+	method configuracionVisuales (){
+		game.addVisualCharacter(personaje)
+		game.addVisual(new Maiz(position=game.at(1,1)))
+	}
+
+	method configuracionInicial(){
+		game.title("La granja")
+		game.height(10)
+		game.width(10)
+		game.ground("ground.png")
 	}
 
 	
