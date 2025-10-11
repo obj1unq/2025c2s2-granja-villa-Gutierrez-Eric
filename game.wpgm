@@ -25,6 +25,8 @@ object config {
 		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=posicionSiembra))}
 		keyboard.r().onPressDo{personaje.riegoDeCultivo()}
 		keyboard.c().onPressDo{personaje.cosecharCultivo()}
+		keyboard.v().onPressDo{personaje.ventaDeCultivosCosechados()}
+		keyboard.space().onPressDo{personaje.bienesEnPosecion()}
 	}
 
 	method configuracionVisuales (){

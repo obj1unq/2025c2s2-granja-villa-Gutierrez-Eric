@@ -4,7 +4,15 @@ import cultivos.*
 object personaje {
 	var property position = game.center()
 	const property image = "mplayer.png"
-	const property cultivosCosechados = []
+	const property cultivosCosechados = #{}
+	var property dinero = 0
+
+	method text() {
+		return dinero.toString()
+	}
+	method textColor() {
+		return "FF0000FF"
+	}
 
 	// SIEMBRA CULTIVOS
 
@@ -52,4 +60,25 @@ object personaje {
 		}
 	}
 
+	// VENTA CULTIVOS
+
+	method ventaDeCultivosCosechados(){
+		dinero = dinero + self.dineroDeCultivos().sum()
+		cultivosCosechados.clear()
+	}	
+
+	method dineroDeCultivos(){
+		return cultivosCosechados.map({cultivo => cultivo.precioDeVenta()})
+	}
+
+	//REVISAR(NO FUNCIONA)
+	method bienesEnPosecion(){
+		game.say(self,self.dineroYCultivos())
+	}
+
+	method dineroYCultivos(){
+		return dinero.toString() + "monedas Y"+  cultivosCosechados.size().toString() + "cultivos"
+	}
+
+	
 }

@@ -34,7 +34,10 @@ class Maiz {
 			game.removeVisual(self)
 			cultivos.removerCultivoEnPosicion(self)
 		}
+	}
 
+	method precioDeVenta(){
+		return 150
 	}
 
 
@@ -90,6 +93,14 @@ class Trigo{
 			cultivos.removerCultivoEnPosicion(self)
 		}
 	}
+
+	method precioDeVenta(){
+		if(etapa == 2){
+			return 200
+		} else {
+			return (etapa-1)* 100
+		}
+	}
 }
 
 class Tomaco{
@@ -122,6 +133,10 @@ class Tomaco{
 			cultivos.removerCultivoEnPosicion(self)
 		}
 
+	method precioDeVenta(){
+		return 80
+	}
+
 }
 
 object cultivos {
@@ -142,6 +157,5 @@ object cultivos {
 
 	method removerCultivoEnPosicion(cultivo){
 		cultivosPlantados.remove(cultivo)
-
 	}
 }
