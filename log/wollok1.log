@@ -765,3 +765,6 @@
 {"exitCode":"SIGHUP","level":"info","message":"👾 Game executed game.farmville on c:\\Users\\Eric\\OneDrive\\Desktop\\Objetos 1\\Practica\\2025c2s2-granja-villa-Gutierrez-Eric","timeElapsed":244762,"timestamp":"2025-10-08T23:47:07.994Z"}
 {"level":"info","message":"🚀 Program executed \u001b[3m\u001b[34mgame.farmville\u001b[39m\u001b[23m on \u001b[3m\u001b[34mc:\\Users\\Eric\\OneDrive\\Desktop\\Objetos 1\\Practica\\2025c2s2-granja-villa-Gutierrez-Eric\u001b[39m\u001b[23m","ok":true,"timeElapsed":288,"timestamp":"2025-10-08T23:47:09.332Z"}
 {"level":"info","message":"⌛ Building environment","timeElapsed":121,"timestamp":"2025-10-11T01:47:29.790Z"}
+{"level":"info","message":"🚀 Program executed \u001b[3m\u001b[34mgame.farmville\u001b[39m\u001b[23m on \u001b[3m\u001b[34mc:\\Users\\Eric\\OneDrive\\Desktop\\Objetos 1\\Practica\\2025c2s2-granja-villa-Gutierrez-Eric\u001b[39m\u001b[23m","ok":true,"timeElapsed":295,"timestamp":"2025-10-11T01:47:32.711Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":119,"timestamp":"2025-10-11T01:47:54.925Z"}
+{"exitCode":"SIGHUP","level":"info","message":"👾 Game executed game.farmville on c:\\Users\\Eric\\OneDrive\\Desktop\\Objetos 1\\Practica\\2025c2s2-granja-villa-Gutierrez-Eric","timeElapsed":239513,"timestamp":"2025-10-11T01:51:31.929Z"}
