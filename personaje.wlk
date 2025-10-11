@@ -4,6 +4,7 @@ import cultivos.*
 object personaje {
 	var property position = game.center()
 	const property image = "mplayer.png"
+	const property cultivosCosechados = []
 
 	// SIEMBRA CULTIVOS
 
@@ -20,9 +21,10 @@ object personaje {
 
 	// RIEGO CULTIVOS
 
-	method regarCultivo(cultivo){
+	method riegoDeCultivo(){
 		self.asertarRiegoCultivo()
-		cultivo.regado()
+		const cultivoARegar = cultivos.cultivoEnPosicionDe(self)
+		cultivoARegar.cultivoAlRegar()
 
 	}
 
@@ -31,4 +33,23 @@ object personaje {
 			self.error ("No tengo nada para regar")
 		}
 	}
+
+	// COSECHAR CULTIVOS
+
+	method cosecharCultivo(){
+		self.asertarCosecha()
+		const cultivoACosechar = cultivos.cultivoEnPosicionDe(self)
+		cultivoACosechar.esCosechadoPor(self)
+	}
+
+	method agregarACosechado(cultivo){
+		cultivosCosechados.add(cultivo)
+	}
+	
+	method asertarCosecha(){
+		if(not(cultivos.hayAlgunCultivoEnPosicion(self.position()))){
+			self.error ("No hay cultivo para cosechar")
+		}
+	}
+
 }
