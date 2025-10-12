@@ -88,7 +88,7 @@ object personaje {
 	}
 
 	method dineroYCultivos(){
-		return dinero.toString() + "monedas Y"+  cultivosCosechados.size().toString() + "cultivos"
+		return "Tengo " + dinero + " monedas Y " +  cultivosCosechados.size() + " cultivos"
 	}
 
 	
