@@ -14,6 +14,13 @@ object personaje {
 		return "FF0000FF"
 	}
 
+	// MOVIMIENTOS
+	
+	method mover(direccion){
+        position = direccion.siguiente(position)
+    }
+
+
 	// SIEMBRA CULTIVOS
 
 	method siembraDe(cultivo){

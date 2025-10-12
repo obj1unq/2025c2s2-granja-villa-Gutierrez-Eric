@@ -117,15 +117,16 @@ class Tomaco{
 		return position == posicion
 	}
 	
-	// NO FUNCIONA
 	method cultivoAlRegar(){
 		if(not self.estaEnElLimiteSuperior()){
-			game.removeVisual(self)
-		}
+			position = game.at(position.x(),position.y()+1)
+		} else {
+			position = game.at(position.x(),0)
 	}
+}
 
 	method estaEnElLimiteSuperior(){
-		return position.y() == game.width ()
+		return position.y() == game.width ()- 1
 	}
 	method esCosechadoPor(personaje){
 			personaje.agregarACosechado(self)
@@ -146,6 +147,9 @@ object cultivos {
 		cultivosPlantados.add(cultivo)
 	}
 
+	method posicionDeCultivos(){
+		return cultivosPlantados.map({cultivo => cultivo.position()})
+	}
 
 	method hayAlgunCultivoEnPosicion(posicion){
 		return cultivosPlantados.any({cultivo => cultivo.estaEnPosicion(posicion)})

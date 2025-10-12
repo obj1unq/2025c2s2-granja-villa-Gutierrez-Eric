@@ -1,6 +1,7 @@
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import direcciones.*
 
 program farmville {
 	//  CONFIG	
@@ -20,6 +21,10 @@ program farmville {
 object config {
 	method configuracionTeclas(){
 		const posicionSiembra = personaje.position()
+		keyboard.w().onPressDo({personaje.mover(arriba)})
+        keyboard.s().onPressDo({personaje.mover(abajo)})
+        keyboard.a().onPressDo({personaje.mover(izquierda)})
+        keyboard.d().onPressDo({personaje.mover(derecha)})
 		keyboard.m().onPressDo{personaje.siembraDe(new Maiz(position=posicionSiembra))}
 		keyboard.t().onPressDo{personaje.siembraDe(new Trigo(position=posicionSiembra))}
 		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=posicionSiembra))}
@@ -30,8 +35,7 @@ object config {
 	}
 
 	method configuracionVisuales (){
-		game.addVisualCharacter(personaje)
-		game.addVisual(new Maiz(position=game.at(1,1)))
+		game.addVisual(personaje)
 	}
 
 	method configuracionInicial(){
@@ -39,7 +43,5 @@ object config {
 		game.height(10)
 		game.width(10)
 		game.ground("ground.png")
-	}
-
-	
+	}	
 }
