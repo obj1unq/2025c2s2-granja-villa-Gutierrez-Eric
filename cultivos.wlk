@@ -123,6 +123,7 @@ class Tomaco{
 	}
 	
 	method cultivoAlRegar(){
+		self.asertarRegado()
 		if(not self.estaEnElLimiteSuperior()){
 			position = game.at(position.x(),position.y()+1)
 		} else {
@@ -130,9 +131,16 @@ class Tomaco{
 	}
 }
 
+	method asertarRegado(){
+		if(cultivos.hayAlgunCultivoEnPosicion(game.at(position.x(),position.y()+1))){
+			self.error ("No puede expandirse ya hay un cultivo en la celda superior")
+		}
+	}
+
 	method estaEnElLimiteSuperior(){
 		return position.y() == game.width ()- 1
 	}
+
 	method esCosechadoPor(personaje){
 			personaje.agregarACosechado(self)
 			game.removeVisual(self)
