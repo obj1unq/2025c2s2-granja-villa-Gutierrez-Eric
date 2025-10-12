@@ -7,14 +7,102 @@ describe "TESTS GRANJA VILLA"{
 
     test "Test sembrar maiz,trigo y tomaco"{
 
-        const posicionSiembra = personaje.position()
 
-        personaje.siembraDe(new Maiz(position = posicionSiembra))
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        assert.that(cultivos.hayAlgunCultivoEnPosicion(personaje.position()))
         personaje.mover(abajo)
-        personaje.siembraDe(new Trigo(position = posicionSiembra))
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        assert.that(cultivos.hayAlgunCultivoEnPosicion(personaje.position()))
         personaje.mover(abajo)
-        personaje.siembraDe(new Tomaco(position = posicionSiembra))
-        assert.equals([game.at(5,5),game.at(5,4),game.at(5,3)], cultivos.posicionDeCultivos()) // FALLA
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        assert.that(cultivos.hayAlgunCultivoEnPosicion(personaje.position()))
+    }
 
+    test "Aserción cultivar en el mismo lugar"{
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        assert.that(cultivos.hayAlgunCultivoEnPosicion(personaje.position()))
+        assert.throwsException({personaje.siembraDe(new Trigo(position = personaje.position()))})
+    }
+
+    test "Test regar maiz,trigo y tomaco"{
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "corn_adult.png")
+        personaje.mover(abajo)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_1.png")
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_2.png")
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_3.png")
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_0.png")
+        personaje.mover(derecha)
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.mover(arriba)
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).position()==personaje.position())
+    }
+
+    test "Asercion de riego de cultivos"{
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "corn_adult.png")
+        personaje.mover(abajo)
+        assert.throwsException({personaje.riegoDeCultivo()})
+    }
+
+    test "Test cosechar Maiz,Trigo Y Tomaco"{
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        assert.that(personaje.cantCultivosCosechados() == 1)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        assert.that(personaje.cantCultivosCosechados() == 2)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        assert.that(personaje.cantCultivosCosechados() == 3)
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        personaje.cosecharCultivo()
+        assert.that(personaje.cantCultivosCosechados() == 4)
+    }
+
+    test "Asercion de cosecha"{
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        assert.throwsException({personaje.cosecharCultivo()})
+    }
+
+    test "Venta de Maiz,Trigo y Toamaco"{
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        personaje.ventaDeCultivosCosechados()
+        assert.that(personaje.dinero() == 150)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        personaje.ventaDeCultivosCosechados()
+        assert.that(personaje.dinero() == 250)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.riegoDeCultivo()
+        personaje.cosecharCultivo()
+        personaje.ventaDeCultivosCosechados()
+        assert.that(personaje.dinero() == 450)
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        personaje.cosecharCultivo()
+        personaje.ventaDeCultivosCosechados()
+        assert.that(personaje.dinero() == 530)
+        
     }
 }

@@ -19,9 +19,9 @@ class Maiz {
 	method estaEnPosicion(posicion){
 		return position == posicion
 	}
-	// PODRIA CAMBIAR IMAGEN SIN NECESIDAD DEL IF
+
 	method cultivoAlRegar (){
-		if(estado == bebe){
+		if(estado.esRegable()){
 			image = "corn_adult.png"
 			estado = adulta
 		}
@@ -29,7 +29,7 @@ class Maiz {
 
 	method esCosechadoPor(personaje){
 
-		if(estado == adulta){
+		if(estado.esCosechable()){
 			personaje.agregarACosechado(self)
 			game.removeVisual(self)
 			cultivos.removerCultivoEnPosicion(self)
@@ -44,19 +44,38 @@ class Maiz {
 }
 
 object bebe {
+	var property image = "corn_baby.png"
 
-	//PREGUNTAR SI TRABAJAR LA IMAGEN ACA
+	method esCosechable (){
+		return false
+	}
+
+	method esRegable(){
+		return true
+	}
 }
 
 object adulta {
+	var property image = "corn_adult.png"
 
+	method esCosechable (){
+		return true
+	}
+	
+	method esRegable(){
+		return false
+	}
 }
 
 
 class Trigo{
 	var property position 
-	var property image = "wheat_0.png"
 	var property etapa = 0
+
+	method image(){
+		return "wheat_" + etapa + ".png"
+	}
+	
 
 	method siembra(personaje){
 		position = personaje.position()
@@ -68,20 +87,10 @@ class Trigo{
 		return position == posicion
 	}
 
-	// ESTO NO ME GUSTA PREGUNTAR SOBRE ETAPAS
-
 	method cultivoAlRegar(){
-		if(etapa == 0){
-			image = "wheat_1.png"
-			etapa = 1
-		}else if(etapa == 1){
-			image = "wheat_2.png"
-			etapa = 2
-		} else if(etapa == 2){
-			image = "wheat_3.png"
-			etapa = 3
+		if(etapa < 3){
+			etapa = etapa +1
 		} else {
-			image = "wheat_0.png"
 			etapa = 0
 		}
 	}
@@ -95,17 +104,13 @@ class Trigo{
 	}
 
 	method precioDeVenta(){
-		if(etapa == 2){
-			return 200
-		} else {
-			return (etapa-1)* 100
-		}
+			return (etapa - 1)*100
 	}
 }
 
 class Tomaco{
 	var property position
-	var property image = "tomaco_baby.png"
+	var property image = "tomaco.png"
 
 	method siembra(personaje){
 		position = personaje.position()
@@ -147,10 +152,6 @@ object cultivos {
 		cultivosPlantados.add(cultivo)
 	}
 
-	method posicionDeCultivos(){
-		return cultivosPlantados.map({cultivo => cultivo.position()})
-	}
-
 	method hayAlgunCultivoEnPosicion(posicion){
 		return cultivosPlantados.any({cultivo => cultivo.estaEnPosicion(posicion)})
 	}
@@ -162,4 +163,9 @@ object cultivos {
 	method removerCultivoEnPosicion(cultivo){
 		cultivosPlantados.remove(cultivo)
 	}
+
+	method cantCultivosPlantadosEsIgualA(numero){
+		return cultivosPlantados.size() == numero
+	}
+
 }

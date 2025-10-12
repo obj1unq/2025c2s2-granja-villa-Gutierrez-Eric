@@ -67,6 +67,10 @@ object personaje {
 		}
 	}
 
+	method cantCultivosCosechados(){
+		return cultivosCosechados.size()
+	}
+
 	// VENTA CULTIVOS
 
 	method ventaDeCultivosCosechados(){
