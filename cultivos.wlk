@@ -168,9 +168,15 @@ object cultivos {
 		return cultivosPlantados.find({cultivo => cultivo.estaEnPosicion(granjero.position())})
 	}
 
+	method cultivoEnPosicion(posicion){
+		return cultivosPlantados.find({cultivo => cultivo.estaEnPosicion(posicion)})
+	}
+
+
 	method removerCultivoEnPosicion(cultivo){
 		cultivosPlantados.remove(cultivo)
 	}
+
 
 	method cantCultivosPlantadosEsIgualA(numero){
 		return cultivosPlantados.size() == numero
