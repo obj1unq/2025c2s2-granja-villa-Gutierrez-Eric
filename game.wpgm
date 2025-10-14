@@ -2,6 +2,7 @@ import wollok.game.*
 import personaje.*
 import cultivos.*
 import direcciones.*
+import bonus.*
 
 program farmville {
 	//  CONFIG	
@@ -12,6 +13,8 @@ program farmville {
  	
 	// CONFIGURACIÓN TECLAS
 	config.configuracionTeclas() 
+	// ON TIK DE ASPERSORES
+	config.configuracionConTiming()
 
  	// COMIENZA
 	game.start()
@@ -20,18 +23,22 @@ program farmville {
 
 object config {
 	method configuracionTeclas(){
-		const posicionSiembra = personaje.position()
-		keyboard.w().onPressDo({personaje.mover(arriba)})
-        keyboard.s().onPressDo({personaje.mover(abajo)})
-        keyboard.a().onPressDo({personaje.mover(izquierda)})
-        keyboard.d().onPressDo({personaje.mover(derecha)})
-		keyboard.m().onPressDo{personaje.siembraDe(new Maiz(position=posicionSiembra))}
-		keyboard.t().onPressDo{personaje.siembraDe(new Trigo(position=posicionSiembra))}
-		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=posicionSiembra))}
+		keyboard.up().onPressDo({personaje.mover(arriba)})
+        keyboard.down().onPressDo({personaje.mover(abajo)})
+        keyboard.left().onPressDo({personaje.mover(izquierda)})
+        keyboard.right().onPressDo({personaje.mover(derecha)})
+		keyboard.m().onPressDo{personaje.siembraDe(new Maiz(position=personaje.position()))}
+		keyboard.t().onPressDo{personaje.siembraDe(new Trigo(position=personaje.position()))}
+		keyboard.o().onPressDo{personaje.siembraDe(new Tomaco(position=personaje.position()))}
 		keyboard.r().onPressDo{personaje.riegoDeCultivo()}
 		keyboard.c().onPressDo{personaje.cosecharCultivo()}
 		keyboard.v().onPressDo{personaje.ventaDeCultivosCosechados()}
 		keyboard.space().onPressDo{personaje.bienesEnPosecion()}
+		keyboard.a().onPressDo{personaje.colocarAspersor(new Aspersor(position=personaje.position()))}
+	}
+
+	method configuracionConTiming(){
+		game.onTick(1000, "regarLimitrofes", { aspersores.activarAspersores()  } )
 	}
 
 	method configuracionVisuales (){

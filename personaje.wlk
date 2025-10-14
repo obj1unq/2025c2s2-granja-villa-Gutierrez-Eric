@@ -1,5 +1,6 @@
 import wollok.game.*
 import cultivos.*
+import bonus.*
 
 object personaje {
 	var property position = game.center()
@@ -82,7 +83,6 @@ object personaje {
 		return cultivosCosechados.map({cultivo => cultivo.precioDeVenta()})
 	}
 
-	//REVISAR(NO FUNCIONA)
 	method bienesEnPosecion(){
 		game.say(self,self.dineroYCultivos())
 	}
@@ -91,5 +91,10 @@ object personaje {
 		return "Tengo " + dinero + " monedas Y " +  cultivosCosechados.size() + " cultivos"
 	}
 
+	// BONUS ASPERSORES
+
+	method colocarAspersor(aspersor){
+		aspersor.colocarEnPosicion(self.position())
+	}
 	
 }
