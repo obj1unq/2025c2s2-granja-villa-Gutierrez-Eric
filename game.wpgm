@@ -43,6 +43,10 @@ object config {
 
 	method configuracionVisuales (){
 		game.addVisual(personaje)
+		game.addVisual(new Mercado(position=game.at(0,0)))
+		game.addVisual(new Mercado(position=game.at(9,0)))
+		game.addVisual(new Mercado(position=game.at(0,9)))
+		game.addVisual(new Mercado(position=game.at(9,9)))
 	}
 
 	method configuracionInicial(){
