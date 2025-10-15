@@ -50,10 +50,31 @@ class Aspersor {
 
 class Mercado {
     var property position 
+    const property mercaderia = #{}
+    var property monedas 
 
+    method text() {
+		  return monedas.toString()
+	}
+
+	  method textColor() {
+		  return "FF0000FF"
+	  }
+    
     method image(){
         return "market.png"
     }
 
-    
+    method puedeVender(personaje){
+      return (position == personaje.position()) and (monedas >= personaje.dineroDeCultivosQuePuedeVender())
+    }
+
+    method venderMercaderiaDe(personaje){
+      const pagoMercaderia =  personaje.dineroDeCultivosQuePuedeVender()
+      
+      mercaderia.union(personaje.cultivosCosechados())
+      personaje.ventaDeCultivosCosechados()
+      monedas = monedas - pagoMercaderia
+      
+    }
 }

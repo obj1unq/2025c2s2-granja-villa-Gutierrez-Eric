@@ -96,5 +96,16 @@ object personaje {
 	method colocarAspersor(aspersor){
 		aspersor.colocarEnPosicion(self.position())
 	}
+
+	//BONUS MERCADO
+
+	method venderEnMercado(mercado){
+		if(mercado.puedeVender(self)){
+			mercado.vendeMercaderiaDe(self)
+		}
+	}
 	
+	method dineroDeCultivosQuePuedeVender(){
+		return cultivosCosechados.map ({cultivo => cultivo.dineroDeCultivos()}).sum()
+	}
 }
