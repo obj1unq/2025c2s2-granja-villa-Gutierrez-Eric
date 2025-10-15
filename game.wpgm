@@ -43,6 +43,10 @@ object config {
 
 	method configuracionVisuales (){
 		game.addVisual(personaje)
+		game.addVisual(mercado1)
+		game.addVisual(mercado2)
+		game.addVisual(mercado3)
+		game.addVisual(mercado4)
 	}
 
 	method configuracionInicial(){

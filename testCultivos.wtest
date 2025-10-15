@@ -2,6 +2,7 @@ import personaje.*
 import wollok.game.*
 import cultivos.*
 import direcciones.*
+import bonus.*
 
 describe "TESTS GRANJA VILLA"{
 
@@ -80,29 +81,77 @@ describe "TESTS GRANJA VILLA"{
         assert.throwsException({personaje.cosecharCultivo()})
     }
 
-    test "Venta de Maiz,Trigo y Toamaco"{
+    test "Test aspersores" {
+        personaje.colocarAspersor(new Aspersor(position = personaje.position()))
+        personaje.mover(arriba)
+        personaje.siembraDe(new Maiz(position = personaje.position()))
+        aspersores.activarAspersores()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "corn_adult.png")
+        personaje.mover(derecha)
+        personaje.siembraDe(new Tomaco(position = personaje.position()))
+        aspersores.activarAspersores()
+        personaje.mover(arriba)
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).position()==personaje.position())
+        personaje.mover(abajo)
+        personaje.mover(abajo)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        aspersores.activarAspersores()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_1.png")
+        personaje.mover(abajo)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_2.png")
+        personaje.mover(izquierda)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_3.png")
+        personaje.mover(izquierda)
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        aspersores.activarAspersores()
+        assert.that(cultivos.cultivoEnPosicionDe(personaje).image() == "wheat_0.png")
+
+    }
+
+
+    test "Asercion aspersores"{
+        personaje.siembraDe(new Trigo(position = personaje.position()))
+        assert.throwsException({personaje.colocarAspersor(new Aspersor(position=personaje.position()))})
+
+    } 
+
+    test "Venta de Maiz,Trigo y Tomaco"{
+        
         personaje.siembraDe(new Maiz(position = personaje.position()))
         personaje.riegoDeCultivo()
         personaje.cosecharCultivo()
-        personaje.ventaDeCultivosCosechados()
-        assert.that(personaje.dinero() == 150)
         personaje.siembraDe(new Trigo(position = personaje.position()))
         personaje.riegoDeCultivo()
         personaje.riegoDeCultivo()
         personaje.cosecharCultivo()
-        personaje.ventaDeCultivosCosechados()
-        assert.that(personaje.dinero() == 250)
         personaje.siembraDe(new Trigo(position = personaje.position()))
         personaje.riegoDeCultivo()
         personaje.riegoDeCultivo()
         personaje.riegoDeCultivo()
         personaje.cosecharCultivo()
-        personaje.ventaDeCultivosCosechados()
-        assert.that(personaje.dinero() == 450)
         personaje.siembraDe(new Tomaco(position = personaje.position()))
         personaje.cosecharCultivo()
+        assert.equals(4,personaje.cantCultivosCosechados())
+        personaje.position(game.at(0,0))
         personaje.ventaDeCultivosCosechados()
-        assert.that(personaje.dinero() == 530)
-        
+        assert.equals(0,personaje.dinero())
+        personaje.position(game.at(9,9))
+        personaje.ventaDeCultivosCosechados()
+        assert.equals(530,personaje.dinero())
+        assert.equals(1470,mercado4.monedas())
+    }
+
+    test "Asercion venta sin estar en mercado"{
+        assert.throwsException({personaje.ventaDeCultivosCosechados()})
     }
 }

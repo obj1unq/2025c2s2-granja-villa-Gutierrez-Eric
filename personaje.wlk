@@ -15,6 +15,7 @@ object personaje {
 		return "FF0000FF"
 	}
 
+
 	// MOVIMIENTOS
 	
 	method mover(direccion){
@@ -30,9 +31,16 @@ object personaje {
 	}
 
 	method asertarSiembraCultivo(){
-		if(cultivos.hayAlgunCultivoEnPosicion(self.position())){
-			self.error ("Ya existe en cultivo en la posición")
+		if(self.hayAlgoEnElLugarAPlantar()){
+			self.error ("No puede sembrar en este lugar ya esta ocupado")
 		}
+	}
+
+	method hayAlgoEnElLugarAPlantar(){
+		return cultivos.hayAlgunCultivoEnPosicion(self.position())	||
+				aspersores.hayAlgunAspersorEnPosicion(self.position()) ||
+				mercados.hayAlgunMercadoEnPosicion(self.position())
+
 	}
 
 	// RIEGO CULTIVOS
@@ -72,12 +80,30 @@ object personaje {
 		return cultivosCosechados.size()
 	}
 
-	// VENTA CULTIVOS
+	// VENTA CULTIVOS ANTES DEL BONUS
 
-	method ventaDeCultivosCosechados(){
-		dinero = dinero + self.dineroDeCultivos().sum()
-		cultivosCosechados.clear()
-	}	
+	// method ventaDeCultivosCosechados(){
+	//	dinero = dinero + self.dineroDeCultivos().sum()
+	//	cultivosCosechados.clear()
+	// }
+
+	// VENTA CULTIVOS DESPUES DEL BONUS 
+
+		method ventaDeCultivosCosechados(){
+			self.validarVenta()
+			const mercado = mercados.mercadoEnPosicion(position)
+		if (mercado.puedeComprarProductosDe(self)){
+			mercado.comprarProductosDe(self)
+			dinero = dinero + self.dineroDeCultivos().sum()
+			cultivosCosechados.clear()
+		}
+	}
+
+	method validarVenta(){
+		if (!mercados.hayAlgunMercadoEnPosicion(position)){
+			self.error("No hay existe un mercado aca")
+		}
+	}
 
 	method dineroDeCultivos(){
 		return cultivosCosechados.map({cultivo => cultivo.precioDeVenta()})
@@ -94,18 +120,18 @@ object personaje {
 	// BONUS ASPERSORES
 
 	method colocarAspersor(aspersor){
+		self.asertarColocacionDeAspersor()
 		aspersor.colocarEnPosicion(self.position())
 	}
 
-	//BONUS MERCADO
-
-	method venderEnMercado(mercado){
-		if(mercado.puedeVender(self)){
-			mercado.vendeMercaderiaDe(self)
+	method asertarColocacionDeAspersor(){
+		if(mercados.hayAlgunMercadoEnPosicion(position) || cultivos.hayAlgunCultivoEnPosicion(position)){
+			self.error("Hay algo en el lugar a colocar aspersor")
 		}
 	}
-	
+	//BONUS MERCADO
+
 	method dineroDeCultivosQuePuedeVender(){
-		return cultivosCosechados.map ({cultivo => cultivo.dineroDeCultivos()}).sum()
+		return self.dineroDeCultivos().sum()
 	}
 }

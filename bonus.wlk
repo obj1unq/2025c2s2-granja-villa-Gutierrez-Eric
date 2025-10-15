@@ -1,6 +1,5 @@
 import wollok.game.*
 import cultivos.*
-import randomizer.*
 
 class Aspersor {
     var property position
@@ -35,6 +34,10 @@ class Aspersor {
                                             }
                                 }
         }
+
+       method estaEnPosicion(posicion){
+          return position == posicion
+       }
 }
    
     object aspersores {
@@ -47,6 +50,10 @@ class Aspersor {
     method agregarAspersor(aspersor){
         aspersoresTotales.add(aspersor)
     }
+
+    method hayAlgunAspersorEnPosicion(posicion){
+    return aspersoresTotales.any({aspersor => aspersor.estaEnPosicion(posicion)})
+  }
 }
 
 class Mercado {
@@ -66,27 +73,36 @@ class Mercado {
         return "market.png"
     }
 
-    method puedeVender(personaje){
-      return (position == personaje.position()) and (monedas >= personaje.dineroDeCultivosQuePuedeVender())
+    method puedeComprarProductosDe(personaje){
+      return (monedas >= personaje.dineroDeCultivosQuePuedeVender())
     }
 
-    method venderMercaderiaDe(personaje){
+    method comprarProductosDe(personaje){
       const pagoMercaderia =  personaje.dineroDeCultivosQuePuedeVender()
-      
+
       mercaderia.union(personaje.cultivosCosechados())
-      personaje.ventaDeCultivosCosechados()
       monedas = monedas - pagoMercaderia
       
+    }
+
+    method estaEnPosicion(posicion){
+      return position == posicion
     }
 }
 
 object mercados {
-  const property mercadosDisponibles = #{mercado1,mercado2}
+  const property mercadosDisponibles = #{mercado1,mercado2,mercado3,mercado4}
 
+  method hayAlgunMercadoEnPosicion(posicion){
+    return mercadosDisponibles.any({mercado => mercado.estaEnPosicion(posicion)})
+  }
   
+  method mercadoEnPosicion(posicion){
+    return mercadosDisponibles.find({mercado => mercado.estaEnPosicion(posicion)})
+  }
 }
 
-  const mercado1 = game.addVisual(new Mercado(position=game.at(0,0),monedas = 200))
-  const mercado2 = game.addVisual(new Mercado(position=game.at(1,9),monedas = 1000))
-  const mercado3 = game.addVisual(new Mercado(position=game.at(9,0),monedas = 1500))
-  const mercado4 = game.addVisual(new Mercado(position=game.at(0,9),monedas = 2000))
+  const mercado1 = (new Mercado(position=game.at(0,0),monedas = 200))
+  const mercado2 = (new Mercado(position=game.at(0,9),monedas = 1000))
+  const mercado3 = (new Mercado(position=game.at(9,0),monedas = 1500))
+  const mercado4 = (new Mercado(position=game.at(9,9),monedas = 2000))
