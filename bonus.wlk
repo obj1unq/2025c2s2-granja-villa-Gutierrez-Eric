@@ -1,5 +1,6 @@
 import wollok.game.*
 import cultivos.*
+import randomizer.*
 
 class Aspersor {
     var property position
@@ -78,3 +79,14 @@ class Mercado {
       
     }
 }
+
+object mercados {
+  const property mercadosDisponibles = #{mercado1,mercado2}
+
+  
+}
+
+  const mercado1 = game.addVisual(new Mercado(position=game.at(0,0),monedas = 200))
+  const mercado2 = game.addVisual(new Mercado(position=game.at(1,9),monedas = 1000))
+  const mercado3 = game.addVisual(new Mercado(position=game.at(9,0),monedas = 1500))
+  const mercado4 = game.addVisual(new Mercado(position=game.at(0,9),monedas = 2000))
